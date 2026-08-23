@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Maher Group | Professional Business Solutions</title>
+
+    <meta name="description"
+          content="Maher Group provides professional products and services with quality, reliability and customer satisfaction.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<!-- CHAT WIDGET -->
+<div
+    class="chat-button"
+    id="chatButton"
+    onclick="openBusinessChat()"
+>
+    💬
+</div>
+
+<div class="chat-box" id="chatBox">
+
+    <div class="chat-header">
+
+        <div>
+            <strong>Chat With Us</strong>
+            <small>We usually reply quickly</small>
+        </div>
+
+        <button id="closeChat">
+            ×
+        </button>
+
+    </div>
+
+
+    <div class="chat-body" id="chatBody">
+
+        <div class="chat-welcome">
+            👋 Hello! How can we help you?
+        </div>
+
+    </div>
+
+
+    <div class="visitor-form" id="visitorForm">
+
+        <input
+            type="text"
+            id="visitorName"
+            placeholder="Your name"
+        >
+
+        <button id="startChat">
+            Start Chat
+        </button>
+
+    </div>
+
+
+    <div
+        class="chat-input-area"
+        id="chatInputArea"
+        style="display:none;"
+    >
+
+        <input
+            type="text"
+            id="chatMessage"
+            placeholder="Type your message..."
+        >
+
+        <button id="sendChat">
+            ➤
+        </button>
+
+    </div>
+
+</div>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="container nav-container">
+
+        <a href="#home" class="logo">
+            <span class="logo-icon">P</span>
+            <span>Maher<span>Brothers</span></span>
+        </a>
+
+        <nav id="navMenu">
+
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#posts">Posts</a>
+            <a href="#contact">Contact</a>
+
+        </nav>
+
+        <a href="#contact" class="nav-button">
+            Contact Us
+        </a>
+
+        <button class="menu-btn" id="menuBtn">
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero" id="home">
+
+    <div class="container hero-content">
+
+        <div class="hero-text">
+
+            <span class="badge">
+                ★ Trusted Professional Business
+            </span>
+
+            <h1>
+                Grow Your Business With
+                <span>Confidence.</span>
+            </h1>
+
+            <p>
+                We provide reliable, professional and quality solutions
+                designed to help businesses grow and succeed.
+            </p>
+
+            <div class="hero-buttons">
+
+                <a href="#services" class="btn primary">
+                    Explore Services
+                </a>
+
+                <a href="#contact" class="btn secondary">
+                    Contact Us
+                </a>
+
+            </div>
+
+            <div class="hero-stats">
+
+                <div>
+                    <strong>3+</strong>
+                    <small>Years Experience</small>
+                </div>
+
+                <div>
+                    <strong>100+</strong>
+                    <small>Happy Clients</small>
+                </div>
+
+                <div>
+                    <strong>24/7</strong>
+                    <small>Support</small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="hero-card">
+
+            <div class="floating-card card-one">
+                <span>✓</span>
+                Quality Service
+            </div>
+
+            <div class="business-circle">
+
+                <div class="circle-inner">
+                    <span>YOUR</span>
+                    <strong>BUSINESS</strong>
+                </div>
+
+            </div>
+
+            <div class="floating-card card-two">
+                <span>★</span>
+                Customer First
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="section about" id="about">
+
+    <div class="container two-column">
+
+        <div>
+
+            <span class="section-tag">
+                ABOUT US
+            </span>
+
+            <h2>
+                Professional Service.
+                <span>Real Results.</span>
+            </h2>
+
+            <p>
+                Welcome to Maher Brothers. We are committed to providing
+                professional and reliable solutions for our customers.
+            </p>
+
+            <p>
+                Our goal is simple: deliver quality work, build long-term
+                relationships and help our customers achieve their goals.
+            </p>
+
+            <div class="check-list">
+
+                <div>✓ Professional Team</div>
+                <div>✓ Quality Services</div>
+                <div>✓ Reliable Solutions</div>
+                <div>✓ Customer Satisfaction</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="about-box">
+
+            <div class="about-icon">
+                ✓
+            </div>
+
+            <h3>
+                Why Customers Choose Us
+            </h3>
+
+            <p>
+                We focus on quality, transparency and customer satisfaction.
+                Every project receives professional attention.
+            </p>
+
+            <div class="mini-stat">
+
+                <strong>100%</strong>
+
+                <span>
+                    Customer Focused
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= SERVICES ================= -->
+
+<section class="section services" id="services">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-tag">
+                OUR SERVICES
+            </span>
+
+            <h2>
+                What We <span>Offer</span>
+            </h2>
+
+            <p>
+                Professional services designed according to your business needs.
+            </p>
+
+        </div>
+
+
+        <div class="service-grid">
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    🚀
+                </div>
+
+                <h3>
+                    Business Solutions
+                </h3>
+
+                <p>
+                    Smart and reliable solutions to improve your business
+                    performance.
+                </p>
+
+                <a href="#contact">
+                    Learn More →
+                </a>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    💼
+                </div>
+
+                <h3>
+                    Professional Services
+                </h3>
+
+                <p>
+                    Professional services delivered with quality,
+                    responsibility and attention to detail.
+                </p>
+
+                <a href="#contact">
+                    Learn More →
+                </a>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    📈
+                </div>
+
+                <h3>
+                    Business Growth
+                </h3>
+
+                <p>
+                    Practical strategies and solutions to help your business
+                    grow.
+                </p>
+
+                <a href="#contact">
+                    Learn More →
+                </a>
+
+            </div>
+
+
+            <div class="service-card">
+
+                <div class="service-icon">
+                    🤝
+                </div>
+
+                <h3>
+                    Customer Support
+                </h3>
+
+                <p>
+                    Friendly and responsive support whenever you need us.
+                </p>
+
+                <a href="#contact">
+                    Learn More →
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= POSTS ================= -->
+
+<section class="section posts-section" id="posts">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-tag">
+                LATEST UPDATES
+            </span>
+
+            <h2>
+                Our Latest <span>Posts</span>
+            </h2>
+
+            <p>
+                Share your latest business news, offers, announcements and updates.
+            </p>
+
+        </div>
+
+
+        <!-- ADD POST AREA -->
+
+        <div class="post-admin">
+
+            <h3>
+                Add New Post
+            </h3>
+
+            <input
+                type="text"
+                id="postTitle"
+                placeholder="Post title"
+            >
+
+            <textarea
+                id="postContent"
+                placeholder="Write your post..."
+            ></textarea>
+
+            <button
+                class="btn primary"
+                onclick="addPost()"
+            >
+                + Publish Post
+            </button>
+
+        </div>
+
+
+        <!-- POSTS -->
+
+        <div
+            class="posts-grid"
+            id="postsContainer"
+        >
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+    <div class="container cta-content">
+
+        <div>
+
+            <span>
+                LET'S WORK TOGETHER
+            </span>
+
+            <h2>
+                Ready to Grow Your Business?
+            </h2>
+
+            <p>
+                Contact us today and let's discuss your requirements.
+            </p>
+
+        </div>
+
+        <a href="#contact" class="btn white">
+            Get Started →
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CONTACT ================= -->
+
+<section class="section contact" id="contact">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-tag">
+                CONTACT US
+            </span>
+
+            <h2>
+                Let's <span>Talk</span>
+            </h2>
+
+            <p>
+                Have a question or want to work with us?
+                Send us a message.
+            </p>
+
+        </div>
+
+
+        <div class="contact-grid">
+
+            <div class="contact-info">
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📱
+                    </div>
+
+                    <div>
+                        <small>Phone</small>
+                        <strong>+92000000000</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        ✉
+                    </div>
+
+                    <div>
+                        <small>Email</small>
+                        <strong>maher153530@gmail.com</strong>
+                    </div>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📍
+                    </div>
+
+                    <div>
+                        <small>Location</small>
+                        <strong>Okara, Pakistan</strong>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <form
+                class="contact-form"
+                onsubmit="sendMessage(event)"
+            >
+
+                <input
+                    type="text"
+                    id="name"
+                    placeholder="Your Name"
+                    required
+                >
+
+                <input
+                    type="email"
+                    id="email"
+                    placeholder="Your Email"
+                    required
+                >
+
+                <input
+                    type="text"
+                    id="subject"
+                    placeholder="Subject"
+                    required
+                >
+
+                <textarea
+                    id="message"
+                    placeholder="Your Message"
+                    required
+                ></textarea>
+
+                <button class="btn primary">
+                    Send Message →
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= WHATSAPP ================= -->
+
+<a
+    href="https://wa.me/92000000000"
+    target="_blank"
+    class="whatsapp"
+    title="Chat on WhatsApp"
+>
+    <span>☎</span>
+</a>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="container footer-content">
+
+        <div>
+
+            <a href="#home" class="logo footer-logo">
+                <span class="logo-icon">P</span>
+                <span>Maher<span>Brothers</span></span>
+            </a>
+
+            <p>
+                Professional business solutions with quality and reliability.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#services">Services</a>
+            <a href="#posts">Posts</a>
+            <a href="#contact">Contact</a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © <span id="year"></span> Maher Brothers.
+        All Rights Reserved.
+
+    </div>
+
+</footer>
+
+
+<script src="script.js"></script>
+
+
+<!-- CHAT WIDGET -->
+
+<div class="chat-button" id="chatButton">
+    💬
+</div>
+
+...
+</body>
+</html>
