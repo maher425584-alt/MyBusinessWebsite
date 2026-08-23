@@ -4,81 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Maher Group | Professional Business Solutions</title>
+    <title>Maher Brothers | Professional Business Solutions</title>
 
     <meta name="description"
-          content="Maher Group provides professional products and services with quality, reliability and customer satisfaction.">
+          content="Maher Brothers - Professional products, services, business updates and customer support.">
 
     <link rel="stylesheet" href="style.css">
 </head>
-<!-- CHAT WIDGET -->
-<div
-    class="chat-button"
-    id="chatButton"
-    onclick="openBusinessChat()"
->
-    💬
-</div>
-
-<div class="chat-box" id="chatBox">
-
-    <div class="chat-header">
-
-        <div>
-            <strong>Chat With Us</strong>
-            <small>We usually reply quickly</small>
-        </div>
-
-        <button id="closeChat">
-            ×
-        </button>
-
-    </div>
-
-
-    <div class="chat-body" id="chatBody">
-
-        <div class="chat-welcome">
-            👋 Hello! How can we help you?
-        </div>
-
-    </div>
-
-
-    <div class="visitor-form" id="visitorForm">
-
-        <input
-            type="text"
-            id="visitorName"
-            placeholder="Your name"
-        >
-
-        <button id="startChat">
-            Start Chat
-        </button>
-
-    </div>
-
-
-    <div
-        class="chat-input-area"
-        id="chatInputArea"
-        style="display:none;"
-    >
-
-        <input
-            type="text"
-            id="chatMessage"
-            placeholder="Type your message..."
-        >
-
-        <button id="sendChat">
-            ➤
-        </button>
-
-    </div>
-
-</div>
 
 <body>
 
@@ -89,25 +21,27 @@
     <div class="container nav-container">
 
         <a href="#home" class="logo">
-            <span class="logo-icon">P</span>
+            <span class="logo-icon">M</span>
             <span>Maher<span>Brothers</span></span>
         </a>
 
         <nav id="navMenu">
-
             <a href="#home">Home</a>
             <a href="#about">About</a>
             <a href="#services">Services</a>
             <a href="#posts">Posts</a>
             <a href="#contact">Contact</a>
-
         </nav>
 
         <a href="#contact" class="nav-button">
             Contact Us
         </a>
 
-        <button class="menu-btn" id="menuBtn">
+        <button
+            type="button"
+            class="menu-btn"
+            id="menuBtn"
+            aria-label="Open menu">
             ☰
         </button>
 
@@ -116,7 +50,7 @@
 </header>
 
 
-<!-- ================= HERO ================= -->
+<!-- ================= HOME ================= -->
 
 <section class="hero" id="home">
 
@@ -208,9 +142,7 @@
 
         <div>
 
-            <span class="section-tag">
-                ABOUT US
-            </span>
+            <span class="section-tag">ABOUT US</span>
 
             <h2>
                 Professional Service.
@@ -228,12 +160,10 @@
             </p>
 
             <div class="check-list">
-
                 <div>✓ Professional Team</div>
                 <div>✓ Quality Services</div>
                 <div>✓ Reliable Solutions</div>
                 <div>✓ Customer Satisfaction</div>
-
             </div>
 
         </div>
@@ -241,9 +171,7 @@
 
         <div class="about-box">
 
-            <div class="about-icon">
-                ✓
-            </div>
+            <div class="about-icon">✓</div>
 
             <h3>
                 Why Customers Choose Us
@@ -255,13 +183,8 @@
             </p>
 
             <div class="mini-stat">
-
                 <strong>100%</strong>
-
-                <span>
-                    Customer Focused
-                </span>
-
+                <span>Customer Focused</span>
             </div>
 
         </div>
@@ -279,9 +202,7 @@
 
         <div class="section-heading">
 
-            <span class="section-tag">
-                OUR SERVICES
-            </span>
+            <span class="section-tag">OUR SERVICES</span>
 
             <h2>
                 What We <span>Offer</span>
@@ -298,87 +219,63 @@
 
             <div class="service-card">
 
-                <div class="service-icon">
-                    🚀
-                </div>
+                <div class="service-icon">🚀</div>
 
-                <h3>
-                    Business Solutions
-                </h3>
+                <h3>Business Solutions</h3>
 
                 <p>
                     Smart and reliable solutions to improve your business
                     performance.
                 </p>
 
-                <a href="#contact">
-                    Learn More →
-                </a>
+                <a href="#contact">Learn More →</a>
 
             </div>
 
 
             <div class="service-card">
 
-                <div class="service-icon">
-                    💼
-                </div>
+                <div class="service-icon">💼</div>
 
-                <h3>
-                    Professional Services
-                </h3>
+                <h3>Professional Services</h3>
 
                 <p>
                     Professional services delivered with quality,
                     responsibility and attention to detail.
                 </p>
 
-                <a href="#contact">
-                    Learn More →
-                </a>
+                <a href="#contact">Learn More →</a>
 
             </div>
 
 
             <div class="service-card">
 
-                <div class="service-icon">
-                    📈
-                </div>
+                <div class="service-icon">📈</div>
 
-                <h3>
-                    Business Growth
-                </h3>
+                <h3>Business Growth</h3>
 
                 <p>
                     Practical strategies and solutions to help your business
                     grow.
                 </p>
 
-                <a href="#contact">
-                    Learn More →
-                </a>
+                <a href="#contact">Learn More →</a>
 
             </div>
 
 
             <div class="service-card">
 
-                <div class="service-icon">
-                    🤝
-                </div>
+                <div class="service-icon">🤝</div>
 
-                <h3>
-                    Customer Support
-                </h3>
+                <h3>Customer Support</h3>
 
                 <p>
                     Friendly and responsive support whenever you need us.
                 </p>
 
-                <a href="#contact">
-                    Learn More →
-                </a>
+                <a href="#contact">Learn More →</a>
 
             </div>
 
@@ -397,46 +294,167 @@
 
         <div class="section-heading">
 
-            <span class="section-tag">
-                LATEST UPDATES
-            </span>
+            <span class="section-tag">BUSINESS POSTS</span>
 
             <h2>
-                Our Latest <span>Posts</span>
+                Latest <span>Posts</span>
             </h2>
 
             <p>
-                Share your latest business news, offers, announcements and updates.
+                Products, offers, announcements, images, videos and business
+                updates.
             </p>
 
         </div>
 
 
-        <!-- ADD POST AREA -->
+        <!-- CREATE POST -->
 
         <div class="post-admin">
 
-            <h3>
-                Add New Post
-            </h3>
+            <div class="post-admin-title">
+
+                <div>
+                    <span class="section-tag">CREATE POST</span>
+
+                    <h3>
+                        Create New Post
+                    </h3>
+
+                    <p>
+                        Every new post requires admin approval before publication.
+                    </p>
+                </div>
+
+                <span class="approval-badge">
+                    🔐 Approval Required
+                </span>
+
+            </div>
+
 
             <input
                 type="text"
                 id="postTitle"
-                placeholder="Post title"
+                placeholder="Post title / Product name"
+                maxlength="150"
             >
+
 
             <textarea
                 id="postContent"
-                placeholder="Write your post..."
+                placeholder="Write product details, description, offer or announcement..."
+                maxlength="5000"
             ></textarea>
 
+
+            <!-- PRODUCT OPTIONS -->
+
+            <div class="product-fields">
+
+                <input
+                    type="text"
+                    id="postPrice"
+                    placeholder="Price e.g. Rs. 5,000"
+                    maxlength="80"
+                >
+
+                <input
+                    type="text"
+                    id="postWhatsapp"
+                    placeholder="WhatsApp number e.g. 923001234567"
+                    maxlength="20"
+                >
+
+            </div>
+
+
+            <!-- MEDIA -->
+
+            <div class="media-area">
+
+                <h4>
+                    Add Media
+                </h4>
+
+                <p>
+                    You can attach an image, video or file.
+                </p>
+
+                <div class="media-buttons">
+
+                    <label
+                        class="media-btn"
+                        for="postImage">
+                        🖼️ Image
+                    </label>
+
+                    <input
+                        type="file"
+                        id="postImage"
+                        accept="image/*"
+                        hidden
+                    >
+
+
+                    <label
+                        class="media-btn"
+                        for="postVideo">
+                        🎥 Video
+                    </label>
+
+                    <input
+                        type="file"
+                        id="postVideo"
+                        accept="video/*"
+                        hidden
+                    >
+
+
+                    <label
+                        class="media-btn"
+                        for="postFile">
+                        📎 File
+                    </label>
+
+                    <input
+                        type="file"
+                        id="postFile"
+                        accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.zip"
+                        hidden
+                    >
+
+                </div>
+
+
+                <div
+                    id="selectedMedia"
+                    class="selected-media">
+                </div>
+
+
+                <div
+                    id="imagePreview"
+                    class="image-preview">
+                </div>
+
+            </div>
+
+
             <button
+                type="button"
                 class="btn primary"
-                onclick="addPost()"
-            >
-                + Publish Post
+                id="submitPostBtn">
+
+                + Submit Post for Approval
+
             </button>
+
+
+            <div
+                id="postStatus"
+                class="post-status">
+            </div>
 
         </div>
 
@@ -445,9 +463,7 @@
 
         <div
             class="posts-grid"
-            id="postsContainer"
-        >
-
+            id="postsContainer">
         </div>
 
     </div>
@@ -463,9 +479,7 @@
 
         <div>
 
-            <span>
-                LET'S WORK TOGETHER
-            </span>
+            <span>LET'S WORK TOGETHER</span>
 
             <h2>
                 Ready to Grow Your Business?
@@ -494,9 +508,7 @@
 
         <div class="section-heading">
 
-            <span class="section-tag">
-                CONTACT US
-            </span>
+            <span class="section-tag">CONTACT US</span>
 
             <h2>
                 Let's <span>Talk</span>
@@ -516,13 +528,11 @@
 
                 <div class="contact-item">
 
-                    <div class="contact-icon">
-                        📱
-                    </div>
+                    <div class="contact-icon">📱</div>
 
                     <div>
                         <small>Phone</small>
-                        <strong>+92000000000</strong>
+                        <strong>+92 300 0000000</strong>
                     </div>
 
                 </div>
@@ -530,9 +540,7 @@
 
                 <div class="contact-item">
 
-                    <div class="contact-icon">
-                        ✉
-                    </div>
+                    <div class="contact-icon">✉</div>
 
                     <div>
                         <small>Email</small>
@@ -544,13 +552,11 @@
 
                 <div class="contact-item">
 
-                    <div class="contact-icon">
-                        📍
-                    </div>
+                    <div class="contact-icon">📍</div>
 
                     <div>
                         <small>Location</small>
-                        <strong>Okara, Pakistan</strong>
+                        <strong>Pakistan</strong>
                     </div>
 
                 </div>
@@ -560,8 +566,7 @@
 
             <form
                 class="contact-form"
-                onsubmit="sendMessage(event)"
-            >
+                id="contactForm">
 
                 <input
                     type="text"
@@ -587,11 +592,14 @@
                 <textarea
                     id="message"
                     placeholder="Your Message"
-                    required
-                ></textarea>
+                    required></textarea>
 
-                <button class="btn primary">
+                <button
+                    type="submit"
+                    class="btn primary">
+
                     Send Message →
+
                 </button>
 
             </form>
@@ -606,13 +614,104 @@
 <!-- ================= WHATSAPP ================= -->
 
 <a
-    href="https://wa.me/92000000000"
+    href="https://wa.me/923000000000"
     target="_blank"
+    rel="noopener noreferrer"
     class="whatsapp"
-    title="Chat on WhatsApp"
->
-    <span>☎</span>
+    title="Chat on WhatsApp">
+
+    ☎
+
 </a>
+
+
+<!-- ================= CHAT ================= -->
+
+<div
+    class="chat-button"
+    id="chatButton"
+    title="Chat With Us">
+
+    💬
+
+</div>
+
+
+<div
+    class="chat-box"
+    id="chatBox">
+
+    <div class="chat-header">
+
+        <div>
+            <strong>Chat With Us</strong>
+            <small>We usually reply quickly</small>
+        </div>
+
+        <button
+            type="button"
+            id="closeChat">
+            ×
+        </button>
+
+    </div>
+
+
+    <div
+        class="chat-body"
+        id="chatBody">
+
+        <div class="chat-welcome">
+            👋 Hello! How can we help you?
+        </div>
+
+    </div>
+
+
+    <div
+        class="visitor-form"
+        id="visitorForm">
+
+        <input
+            type="text"
+            id="visitorName"
+            placeholder="Your name"
+            maxlength="80"
+        >
+
+        <button
+            type="button"
+            id="startChat">
+
+            Start Chat
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="chat-input-area"
+        id="chatInputArea">
+
+        <input
+            type="text"
+            id="chatMessage"
+            placeholder="Type your message..."
+            maxlength="2000"
+        >
+
+        <button
+            type="button"
+            id="sendChat">
+
+            ➤
+
+        </button>
+
+    </div>
+
+</div>
 
 
 <!-- ================= FOOTER ================= -->
@@ -624,8 +723,13 @@
         <div>
 
             <a href="#home" class="logo footer-logo">
-                <span class="logo-icon">P</span>
-                <span>Maher<span>Brothers</span></span>
+
+                <span class="logo-icon">M</span>
+
+                <span>
+                    Maher<span>Brothers</span>
+                </span>
+
             </a>
 
             <p>
@@ -650,7 +754,8 @@
 
     <div class="copyright">
 
-        © <span id="year"></span> Maher Brothers.
+        © <span id="year"></span>
+        Maher Brothers.
         All Rights Reserved.
 
     </div>
@@ -658,15 +763,8 @@
 </footer>
 
 
+<!-- ONLY ONE JS FILE -->
 <script src="script.js"></script>
 
-
-<!-- CHAT WIDGET -->
-
-<div class="chat-button" id="chatButton">
-    💬
-</div>
-
-...
 </body>
 </html>
