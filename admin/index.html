@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin Panel | Maher Brothers</title>
+
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+</head>
+
+<body>
+
+    <!-- ================================
+         LOGIN
+    ================================= -->
+
+    <div
+        id="loginScreen"
+        class="screen"
+    >
+
+        <div class="login-card">
+
+            <div class="logo">
+                MB
+            </div>
+
+            <h1>
+                Admin Panel
+            </h1>
+
+            <p class="subtitle">
+                Maher Brothers
+            </p>
+
+            <form id="loginForm">
+
+                <label for="loginEmail">
+                    Admin Email
+                </label>
+
+                <input
+                    type="email"
+                    id="loginEmail"
+                    placeholder="Enter admin email"
+                    required
+                >
+
+                <label for="loginPassword">
+                    Password
+                </label>
+
+                <input
+                    type="password"
+                    id="loginPassword"
+                    placeholder="Enter password"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="primary-btn"
+                    id="loginButton"
+                >
+                    Login
+                </button>
+
+                <div
+                    id="loginStatus"
+                    class="status"
+                ></div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================================
+         ADMIN PANEL
+    ================================= -->
+
+    <div
+        id="adminScreen"
+        class="admin-screen hidden"
+    >
+
+        <header class="admin-header">
+
+            <div>
+
+                <h1>
+                    Maher Brothers
+                </h1>
+
+                <p>
+                    Private Admin Dashboard
+                </p>
+
+            </div>
+
+            <button
+                id="logoutButton"
+                class="logout-btn"
+            >
+                Logout
+            </button>
+
+        </header>
+
+
+        <main class="admin-container">
+
+            <!-- STATS -->
+
+            <section class="stats-grid">
+
+                <div class="stat-card">
+
+                    <span>
+                        Pending
+                    </span>
+
+                    <strong id="pendingCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span>
+                        Approved
+                    </span>
+
+                    <strong id="approvedCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span>
+                        Rejected
+                    </span>
+
+                    <strong id="rejectedCount">
+                        0
+                    </strong>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <span>
+                        Total
+                    </span>
+
+                    <strong id="totalCount">
+                        0
+                    </strong>
+
+                </div>
+
+            </section>
+
+
+            <!-- TOOLBAR -->
+
+            <section class="toolbar">
+
+                <div>
+
+                    <h2>
+                        Business Posts
+                    </h2>
+
+                    <p>
+                        Review and manage submitted posts.
+                    </p>
+
+                </div>
+
+                <button
+                    id="refreshButton"
+                    class="refresh-btn"
+                >
+                    ↻ Refresh
+                </button>
+
+            </section>
+
+
+            <!-- STATUS -->
+
+            <div
+                id="adminStatus"
+                class="admin-status"
+            ></div>
+
+
+            <!-- POSTS -->
+
+            <section
+                id="postsList"
+                class="posts-list"
+            >
+
+                <div class="loading">
+                    Loading posts...
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+
+    <script src="admin.js"></script>
+
+</body>
+</html>
