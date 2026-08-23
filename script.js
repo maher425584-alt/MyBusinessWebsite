@@ -657,20 +657,17 @@ async function submitPost() {
         );
 
     }
-    catch(error) {
+   catch(error) {
 
-        console.error(
-            "Post error:",
-            error
-        );
+    console.error("POST SUBMISSION ERROR:", error);
 
-        showStatus(
-            "Post could not be submitted. Please check Supabase table/storage policies.",
-            "error"
-        );
+    showStatus(
+        "ERROR: " + error.message,
+        "error"
+    );
 
-    }
-    finally {
+}
+ finally {
 
         submitPostBtn.disabled = false;
 
