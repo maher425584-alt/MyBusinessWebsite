@@ -65,7 +65,6 @@ function showLoginStatus(
 
     box.className =
         `status show ${type}`;
-
 }
 
 
@@ -89,13 +88,11 @@ function showAdminStatus(
     box.className =
         `admin-status show ${type}`;
 
-
     setTimeout(() => {
 
         box.classList.remove("show");
 
     }, 5000);
-
 }
 
 
@@ -108,7 +105,6 @@ function getAccessToken() {
     return sessionStorage.getItem(
         "admin_access_token"
     ) || "";
-
 }
 
 
@@ -117,7 +113,6 @@ function getRefreshToken() {
     return sessionStorage.getItem(
         "admin_refresh_token"
     ) || "";
-
 }
 
 
@@ -126,7 +121,6 @@ function getAdminEmail() {
     return sessionStorage.getItem(
         "admin_email"
     ) || "";
-
 }
 
 
@@ -147,7 +141,6 @@ function clearAdminSession() {
     sessionStorage.removeItem(
         "admin_uid"
     );
-
 }
 
 
@@ -172,7 +165,6 @@ function authHeaders() {
             `Bearer ${token}`
 
     };
-
 }
 
 
@@ -346,7 +338,7 @@ async function loginAdmin(
             );
 
     }
-    catch(error) {
+    catch (error) {
 
         throw new Error(
             "Invalid admin verification response."
@@ -465,6 +457,10 @@ async function verifyCurrentAdmin() {
             await response.json();
 
 
+        /* =============================================
+           VERIFY UID
+        ============================================= */
+
         if (
             String(user.id) !==
             ADMIN_UID
@@ -474,6 +470,10 @@ async function verifyCurrentAdmin() {
 
         }
 
+
+        /* =============================================
+           VERIFY EMAIL
+        ============================================= */
 
         if (
             String(user.email)
@@ -488,7 +488,7 @@ async function verifyCurrentAdmin() {
 
 
         /* =============================================
-           VERIFY ADMIN TABLE AGAIN
+           VERIFY ADMIN TABLE
         ============================================= */
 
         const adminResponse =
@@ -497,6 +497,9 @@ async function verifyCurrentAdmin() {
                     ADMIN_UID
                 )}&select=user_id`,
                 {
+
+                    method:
+                        "GET",
 
                     headers: {
 
@@ -533,10 +536,20 @@ async function verifyCurrentAdmin() {
         }
 
 
+        if (
+            admins[0].user_id !==
+            ADMIN_UID
+        ) {
+
+            return false;
+
+        }
+
+
         return true;
 
     }
-    catch(error) {
+    catch (error) {
 
         console.error(
             "Session verification error:",
@@ -581,7 +594,18 @@ function showAdminScreen() {
     }
 
 
+    /* =============================================
+       LOAD POSTS
+    ============================================= */
+
     loadPosts();
+
+
+    /* =============================================
+       LOAD CONTACT MESSAGES
+    ============================================= */
+
+    loadContactMessages();
 
 }
 
@@ -634,13 +658,13 @@ if (loginForm) {
 
             const email =
                 $("loginEmail")
-                    .value
+                    ?.value
                     .trim();
 
 
             const password =
                 $("loginPassword")
-                    .value;
+                    ?.value || "";
 
 
             if (
@@ -662,11 +686,15 @@ if (loginForm) {
                 $("loginButton");
 
 
-            button.disabled =
-                true;
+            if (button) {
 
-            button.textContent =
-                "Checking...";
+                button.disabled =
+                    true;
+
+                button.textContent =
+                    "Checking...";
+
+            }
 
 
             try {
@@ -693,7 +721,7 @@ if (loginForm) {
                 );
 
             }
-            catch(error) {
+            catch (error) {
 
                 console.error(
                     "ADMIN LOGIN ERROR:",
@@ -705,18 +733,23 @@ if (loginForm) {
 
 
                 showLoginStatus(
-                    error.message,
+                    error.message ||
+                    "Login failed.",
                     "error"
                 );
 
             }
             finally {
 
-                button.disabled =
-                    false;
+                if (button) {
 
-                button.textContent =
-                    "Login";
+                    button.disabled =
+                        false;
+
+                    button.textContent =
+                        "Login";
+
+                }
 
             }
 
@@ -741,6 +774,7 @@ if (logoutButton) {
         () => {
 
             clearAdminSession();
+
 
             showAdminStatus(
                 "Logged out successfully.",
@@ -818,7 +852,8 @@ async function loadPosts() {
         if (!response.ok) {
 
             throw new Error(
-                responseText
+                responseText ||
+                "Could not load posts."
             );
 
         }
@@ -835,7 +870,7 @@ async function loadPosts() {
                 );
 
         }
-        catch(error) {
+        catch (error) {
 
             throw new Error(
                 "Invalid posts response."
@@ -865,7 +900,7 @@ async function loadPosts() {
         );
 
     }
-    catch(error) {
+    catch (error) {
 
         console.error(
             "LOAD ADMIN POSTS ERROR:",
@@ -1098,6 +1133,8 @@ function createPostCard(post) {
                             post.media_url
                         )}"
                     >
+
+                    Your browser does not support video playback.
 
                 </video>
 
@@ -1498,7 +1535,8 @@ async function handlePostAction(
         if (!response.ok) {
 
             throw new Error(
-                text
+                text ||
+                "Could not update post."
             );
 
         }
@@ -1513,7 +1551,7 @@ async function handlePostAction(
         await loadPosts();
 
     }
-    catch(error) {
+    catch (error) {
 
         console.error(
             "POST STATUS ERROR:",
@@ -1566,7 +1604,8 @@ async function deletePost(
         if (!response.ok) {
 
             throw new Error(
-                text
+                text ||
+                "Could not delete post."
             );
 
         }
@@ -1581,7 +1620,7 @@ async function deletePost(
         await loadPosts();
 
     }
-    catch(error) {
+    catch (error) {
 
         console.error(
             "DELETE POST ERROR:",
@@ -1601,7 +1640,7 @@ async function deletePost(
 
 
 /* =====================================================
-   REFRESH
+   POSTS REFRESH
 ===================================================== */
 
 const refreshButton =
@@ -1621,14 +1660,20 @@ if (refreshButton) {
                 "↻ Loading...";
 
 
-            await loadPosts();
+            try {
 
+                await loadPosts();
 
-            refreshButton.disabled =
-                false;
+            }
+            finally {
 
-            refreshButton.textContent =
-                "↻ Refresh";
+                refreshButton.disabled =
+                    false;
+
+                refreshButton.textContent =
+                    "↻ Refresh";
+
+            }
 
         }
     );
@@ -1637,91 +1682,24 @@ if (refreshButton) {
 
 
 /* =====================================================
-   AUTO REFRESH
-===================================================== */
-
-setInterval(
-    async () => {
-
-        if (
-            !getAccessToken()
-        ) {
-
-            return;
-
-        }
-
-
-        const adminScreen =
-            $("adminScreen");
-
-
-        if (
-            adminScreen &&
-            !adminScreen.classList.contains(
-                "hidden"
-            )
-        ) {
-
-            await loadPosts();
-
-        }
-
-    },
-    30000
-);
-
-
-/* =====================================================
-   INITIAL START
-===================================================== */
-
-(async function initAdmin() {
-
-    const token =
-        getAccessToken();
-
-
-    if (!token) {
-
-        showLoginScreen();
-
-        return;
-
-    }
-
-
-    const valid =
-        await verifyCurrentAdmin();
-
-
-    if (!valid) {
-
-        clearAdminSession();
-
-        showLoginScreen();
-
-        return;
-
-    }
-
-
-    showAdminScreen();
-
-})();
-/* =====================================================
    CONTACT MESSAGES
 ===================================================== */
 
 const messagesList =
     $("messagesList");
 
+
 const messagesStatus =
     $("messagesStatus");
+
 
 const refreshMessagesButton =
     $("refreshMessagesButton");
 
+
+/* =====================================================
+   CONTACT MESSAGE STATUS
+===================================================== */
 
 function showMessagesStatus(
     message,
@@ -1730,11 +1708,14 @@ function showMessagesStatus(
 
     if (!messagesStatus) return;
 
+
     messagesStatus.textContent =
         message;
 
+
     messagesStatus.className =
         `admin-status show ${type}`;
+
 
     setTimeout(() => {
 
@@ -1753,7 +1734,22 @@ function showMessagesStatus(
 
 async function loadContactMessages() {
 
-    if (!messagesList) return;
+    if (!messagesList) {
+
+        return;
+
+    }
+
+
+    const token =
+        getAccessToken();
+
+
+    if (!token) {
+
+        return;
+
+    }
 
 
     messagesList.innerHTML = `
@@ -1791,25 +1787,50 @@ async function loadContactMessages() {
         if (!response.ok) {
 
             throw new Error(
-                responseText
+                responseText ||
+                "Could not load contact messages."
             );
 
         }
 
 
-        const messages =
-            JSON.parse(
-                responseText
+        let messages = [];
+
+
+        try {
+
+            messages =
+                JSON.parse(
+                    responseText
+                );
+
+        }
+        catch (error) {
+
+            throw new Error(
+                "Invalid contact messages response."
             );
+
+        }
+
+
+        if (
+            !Array.isArray(messages)
+        ) {
+
+            throw new Error(
+                "Invalid contact messages data."
+            );
+
+        }
 
 
         renderContactMessages(
             messages
         );
 
-
     }
-    catch(error) {
+    catch (error) {
 
         console.error(
             "CONTACT MESSAGES ERROR:",
@@ -1882,7 +1903,8 @@ function renderContactMessages(
     }
 
 
-    messagesList.innerHTML = "";
+    messagesList.innerHTML =
+        "";
 
 
     messages.forEach(
@@ -1906,8 +1928,13 @@ function renderContactMessages(
                 message.created_at
                     ? new Date(
                         message.created_at
-                    ).toLocaleString()
+                      ).toLocaleString()
                     : "Unknown";
+
+
+            const isUnread =
+                message.status ===
+                "unread";
 
 
             card.innerHTML = `
@@ -1920,21 +1947,25 @@ function renderContactMessages(
 
                             👤
                             ${escapeHTML(
-                                message.name
+                                message.name ||
+                                "Unknown"
                             )}
 
                         </div>
 
+
                         <a
                             class="contact-message-email"
                             href="mailto:${escapeHTML(
-                                message.email
+                                message.email ||
+                                ""
                             )}"
                         >
 
                             ✉
                             ${escapeHTML(
-                                message.email
+                                message.email ||
+                                "No email"
                             )}
 
                         </a>
@@ -1944,14 +1975,14 @@ function renderContactMessages(
 
                     <span
                         class="message-status ${
-                            message.status === "unread"
+                            isUnread
                                 ? "unread"
                                 : "read"
                         }"
                     >
 
                         ${
-                            message.status === "unread"
+                            isUnread
                                 ? "NEW"
                                 : "READ"
                         }
@@ -1964,7 +1995,8 @@ function renderContactMessages(
                 <div class="contact-message-subject">
 
                     ${escapeHTML(
-                        message.subject
+                        message.subject ||
+                        "No Subject"
                     )}
 
                 </div>
@@ -1973,7 +2005,8 @@ function renderContactMessages(
                 <div class="contact-message-body">
 
                     ${escapeHTML(
-                        message.message
+                        message.message ||
+                        ""
                     )}
 
                 </div>
@@ -1994,17 +2027,22 @@ function renderContactMessages(
                     <div class="message-actions">
 
                         ${
-                            message.status === "unread"
+                            isUnread
                             ? `
+
                                 <button
+                                    type="button"
                                     class="message-action read-message-btn"
                                     data-message-action="read"
                                     data-id="${escapeHTML(
                                         message.id
                                     )}"
                                 >
+
                                     ✓ Mark Read
+
                                 </button>
+
                             `
                             : ""
                         }
@@ -2013,24 +2051,33 @@ function renderContactMessages(
                         <a
                             class="message-action reply-message-btn"
                             href="mailto:${escapeHTML(
-                                message.email
+                                message.email ||
+                                ""
                             )}?subject=${encodeURIComponent(
                                 "Re: " +
-                                (message.subject || "Your Message")
+                                (
+                                    message.subject ||
+                                    "Your Message"
+                                )
                             )}"
                         >
+
                             ↩ Reply
+
                         </a>
 
 
                         <button
+                            type="button"
                             class="message-action delete-message-btn"
                             data-message-action="delete"
                             data-id="${escapeHTML(
                                 message.id
                             )}"
                         >
+
                             🗑 Delete
+
                         </button>
 
                     </div>
@@ -2047,6 +2094,10 @@ function renderContactMessages(
         }
     );
 
+
+    /* =================================================
+       MESSAGE BUTTON EVENTS
+    ================================================= */
 
     messagesList
         .querySelectorAll(
@@ -2074,7 +2125,7 @@ function renderContactMessages(
 
 
 /* =====================================================
-   MESSAGE ACTIONS
+   CONTACT MESSAGE ACTIONS
 ===================================================== */
 
 async function handleContactMessageAction(
@@ -2082,11 +2133,33 @@ async function handleContactMessageAction(
     messageId
 ) {
 
-    if (!messageId) return;
+    if (!messageId) {
 
+        return;
+
+    }
+
+
+    const token =
+        getAccessToken();
+
+
+    if (!token) {
+
+        showLoginScreen();
+
+        return;
+
+    }
+
+
+    /* =================================================
+       DELETE MESSAGE
+    ================================================= */
 
     if (
-        action === "delete"
+        action ===
+        "delete"
     ) {
 
         const confirmed =
@@ -2096,7 +2169,9 @@ async function handleContactMessageAction(
 
 
         if (!confirmed) {
+
             return;
+
         }
 
 
@@ -2126,7 +2201,8 @@ async function handleContactMessageAction(
             if (!response.ok) {
 
                 throw new Error(
-                    text
+                    text ||
+                    "Could not delete message."
                 );
 
             }
@@ -2141,7 +2217,7 @@ async function handleContactMessageAction(
             await loadContactMessages();
 
         }
-        catch(error) {
+        catch (error) {
 
             console.error(
                 "DELETE MESSAGE ERROR:",
@@ -2150,7 +2226,8 @@ async function handleContactMessageAction(
 
 
             showMessagesStatus(
-                "Could not delete message.",
+                "Could not delete message: " +
+                error.message,
                 "error"
             );
 
@@ -2162,8 +2239,13 @@ async function handleContactMessageAction(
     }
 
 
+    /* =================================================
+       MARK MESSAGE AS READ
+    ================================================= */
+
     if (
-        action === "read"
+        action ===
+        "read"
     ) {
 
         try {
@@ -2206,7 +2288,8 @@ async function handleContactMessageAction(
             if (!response.ok) {
 
                 throw new Error(
-                    text
+                    text ||
+                    "Could not update message."
                 );
 
             }
@@ -2221,7 +2304,7 @@ async function handleContactMessageAction(
             await loadContactMessages();
 
         }
-        catch(error) {
+        catch (error) {
 
             console.error(
                 "READ MESSAGE ERROR:",
@@ -2230,7 +2313,8 @@ async function handleContactMessageAction(
 
 
             showMessagesStatus(
-                "Could not update message.",
+                "Could not update message: " +
+                error.message,
                 "error"
             );
 
@@ -2242,7 +2326,7 @@ async function handleContactMessageAction(
 
 
 /* =====================================================
-   MESSAGE REFRESH
+   CONTACT MESSAGE REFRESH
 ===================================================== */
 
 if (
@@ -2251,293 +2335,115 @@ if (
 
     refreshMessagesButton.addEventListener(
         "click",
-        loadContactMessages
+        async () => {
+
+            refreshMessagesButton.disabled =
+                true;
+
+            refreshMessagesButton.textContent =
+                "↻ Loading...";
+
+
+            try {
+
+                await loadContactMessages();
+
+            }
+            finally {
+
+                refreshMessagesButton.disabled =
+                    false;
+
+                refreshMessagesButton.textContent =
+                    "↻ Refresh";
+
+            }
+
+        }
     );
 
 }
 
 
 /* =====================================================
-   START CONTACT MESSAGES
+   AUTO REFRESH
+   Posts + Contact Messages
 ===================================================== */
 
-if (
-    getAccessToken()
-) {
+setInterval(
+    async () => {
 
-    setTimeout(
-        loadContactMessages,
-        500
-    );
-
-}
-/* =====================================================
-   CONTACT MESSAGES
-===================================================== */
-
-async function loadContactMessages() {
-
-    const container =
-        $("messagesList");
-
-    if (!container) return;
+        const token =
+            getAccessToken();
 
 
-    container.innerHTML = `
-        <div class="loading">
-            Loading messages...
-        </div>
-    `;
+        if (!token) {
 
-
-    try {
-
-        const response =
-            await fetch(
-                `${SUPABASE_URL}/rest/v1/contact_messages?order=created_at.desc`,
-                {
-                    method: "GET",
-                    headers: authHeaders()
-                }
-            );
-
-
-        const responseText =
-            await response.text();
-
-
-        if (!response.ok) {
-
-            throw new Error(
-                responseText
-            );
+            return;
 
         }
 
 
-        const messages =
-            JSON.parse(
-                responseText
-            );
+        const adminScreen =
+            $("adminScreen");
 
 
-        renderContactMessages(
-            messages
-        );
+        if (
+            adminScreen &&
+            !adminScreen.classList.contains(
+                "hidden"
+            )
+        ) {
 
-    }
-    catch (error) {
+            await Promise.allSettled([
 
-        console.error(
-            "Load contact messages error:",
-            error
-        );
+                loadPosts(),
 
+                loadContactMessages()
 
-        container.innerHTML = `
+            ]);
 
-            <div class="empty">
+        }
 
-                <h3>
-                    Could not load messages
-                </h3>
-
-                <p>
-                    ${escapeHTML(
-                        error.message
-                    )}
-                </p>
-
-            </div>
-
-        `;
-
-    }
-
-}
+    },
+    30000
+);
 
 
 /* =====================================================
-   RENDER CONTACT MESSAGES
+   INITIAL START
 ===================================================== */
 
-function renderContactMessages(
-    messages
-) {
+(async function initAdmin() {
 
-    const container =
-        $("messagesList");
+    const token =
+        getAccessToken();
 
 
-    if (!container) return;
+    if (!token) {
 
-
-    if (!messages.length) {
-
-        container.innerHTML = `
-
-            <div class="empty">
-
-                <h3>
-                    No messages yet
-                </h3>
-
-                <p>
-                    Messages submitted through your website
-                    contact form will appear here.
-                </p>
-
-            </div>
-
-        `;
+        showLoginScreen();
 
         return;
 
     }
 
 
-    container.innerHTML = "";
+    const valid =
+        await verifyCurrentAdmin();
 
 
-    messages.forEach(
-        message => {
+    if (!valid) {
 
-            const card =
-                document.createElement(
-                    "article"
-                );
+        clearAdminSession();
 
+        showLoginScreen();
 
-            card.className =
-                "post-admin-card";
+        return;
+
+    }
 
 
-            const date =
-                message.created_at
-                    ? new Date(
-                        message.created_at
-                      ).toLocaleString()
-                    : "";
+    showAdminScreen();
 
-
-            card.innerHTML = `
-
-                <div class="post-admin-top">
-
-                    <div>
-
-                        <h3>
-                            ${escapeHTML(
-                                message.subject
-                            )}
-                        </h3>
-
-                        <p class="post-description">
-                            ${escapeHTML(
-                                message.message
-                            )}
-                        </p>
-
-                    </div>
-
-                    <span class="badge approved">
-                        NEW
-                    </span>
-
-                </div>
-
-
-                <div class="post-details">
-
-                    <div class="detail-box">
-
-                        <strong>
-                            Name
-                        </strong>
-
-                        ${escapeHTML(
-                            message.name
-                        )}
-
-                    </div>
-
-
-                    <div class="detail-box">
-
-                        <strong>
-                            Email
-                        </strong>
-
-                        ${escapeHTML(
-                            message.email
-                        )}
-
-                    </div>
-
-                </div>
-
-
-                <div class="post-date">
-
-                    Received:
-                    ${escapeHTML(
-                        date
-                    )}
-
-                </div>
-
-            `;
-
-
-            container.appendChild(
-                card
-            );
-
-        }
-    );
-
-}
-
-
-/* =====================================================
-   REFRESH CONTACT MESSAGES
-===================================================== */
-
-const refreshMessagesButton =
-    $("refreshMessagesButton");
-
-
-if (refreshMessagesButton) {
-
-    refreshMessagesButton.addEventListener(
-        "click",
-        loadContactMessages
-    );
-
-}
-
-
-/* =====================================================
-   LOAD MESSAGES WITH ADMIN DASHBOARD
-===================================================== */
-
-const originalShowAdminScreen =
-    showAdminScreen;
-
-
-showAdminScreen =
-    function() {
-
-        $("loginScreen")
-            .classList.add("hidden");
-
-
-        $("adminScreen")
-            .classList.remove("hidden");
-
-
-        loadPosts();
-
-        loadContactMessages();
-
-    };
+})();
