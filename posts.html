@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Posts | Maher Brothers</title>
+
+    <meta name="description"
+          content="Latest products, offers, announcements and business updates from Maher Brothers.">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<header class="navbar">
+
+    <div class="container nav-container">
+
+        <a href="index.html" class="logo">
+            <span class="logo-icon">M</span>
+            <span>Maher<span>Brothers</span></span>
+        </a>
+
+        <nav id="navMenu">
+            <a href="index.html">Home</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#services">Services</a>
+            <a href="posts.html" class="active">Posts</a>
+            <a href="index.html#contact">Contact</a>
+        </nav>
+
+        <a href="index.html#contact" class="nav-button">
+            Contact Us
+        </a>
+
+        <button
+            type="button"
+            class="menu-btn"
+            id="menuBtn"
+            aria-label="Open menu">
+            ☰
+        </button>
+
+    </div>
+
+</header>
+
+
+<!-- ================= POSTS ================= -->
+
+<section class="section posts-section" id="posts">
+
+    <div class="container">
+
+        <div class="section-heading">
+
+            <span class="section-tag">BUSINESS POSTS</span>
+
+            <h2>
+                Latest <span>Posts</span>
+            </h2>
+
+            <p>
+                Products, offers, announcements, images, videos and business
+                updates.
+            </p>
+
+        </div>
+<!-- ================= POST SEARCH ================= -->
+
+<div class="post-search">
+
+    <div class="post-search-box">
+
+        <span class="post-search-icon">🔍</span>
+
+        <input
+            type="search"
+            id="postSearch"
+            placeholder="Search products or posts..."
+            autocomplete="off"
+            aria-label="Search products or posts"
+        >
+
+        <button
+            type="button"
+            id="clearPostSearch"
+            class="clear-search"
+            aria-label="Clear search">
+            ×
+        </button>
+
+    </div>
+
+    <div
+        id="searchResultCount"
+        class="search-result-count">
+    </div>
+
+</div>
+
+        <!-- CREATE POST -->
+
+        <div class="post-admin">
+
+            <div class="post-admin-title">
+
+                <div>
+
+                    <span class="section-tag">
+                        CREATE POST
+                    </span>
+
+                    <h3>
+                        Create New Post
+                    </h3>
+
+                    <p>
+                        Every new post requires admin approval before publication.
+                    </p>
+
+                </div>
+
+                <span class="approval-badge">
+                    🔐 Approval Required
+                </span>
+
+            </div>
+
+
+            <input
+                type="text"
+                id="postTitle"
+                placeholder="Post title / Product name"
+                maxlength="150"
+            >
+
+
+            <textarea
+                id="postContent"
+                placeholder="Write product details, description, offer or announcement..."
+                maxlength="5000"
+            ></textarea>
+
+
+            <!-- PRODUCT OPTIONS -->
+
+            <div class="product-fields">
+
+                <input
+                    type="text"
+                    id="postPrice"
+                    placeholder="Price e.g. Rs. 5,000"
+                    maxlength="80"
+                >
+
+                <input
+                    type="text"
+                    id="postWhatsapp"
+                    placeholder="WhatsApp number e.g. 923001234567"
+                    maxlength="20"
+                >
+
+            </div>
+
+
+            <!-- MEDIA -->
+
+            <div class="media-area">
+
+                <h4>
+                    Add Media
+                </h4>
+
+                <p>
+                    You can attach an image, video or file.
+                </p>
+
+                <div class="media-buttons">
+
+                    <label
+                        class="media-btn"
+                        for="postImage">
+                        🖼️ Image
+                    </label>
+
+                    <input
+                        type="file"
+                        id="postImage"
+                        accept="image/*"
+                        hidden
+                    >
+
+
+                    <label
+                        class="media-btn"
+                        for="postVideo">
+                        🎥 Video
+                    </label>
+
+                    <input
+                        type="file"
+                        id="postVideo"
+                        accept="video/*"
+                        hidden
+                    >
+
+
+                    <label
+                        class="media-btn"
+                        for="postFile">
+                        📎 File
+                    </label>
+
+                    <input
+                        type="file"
+                        id="postFile"
+                        accept=".pdf,.doc,.docx,.xls,.xlsx,.txt,.zip"
+                        hidden
+                    >
+
+                </div>
+
+
+                <div
+                    id="selectedMedia"
+                    class="selected-media">
+                </div>
+
+
+                <div
+                    id="imagePreview"
+                    class="image-preview">
+                </div>
+
+            </div>
+
+
+            <button
+                type="button"
+                class="btn primary"
+                id="submitPostBtn">
+
+                + Submit Post for Approval
+
+            </button>
+
+
+            <div
+                id="postStatus"
+                class="post-status">
+            </div>
+
+        </div>
+
+
+        <!-- APPROVED POSTS -->
+
+        <div
+            class="posts-grid"
+            id="postsContainer">
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= WHATSAPP ================= -->
+
+<a
+    href="https://wa.me/923000000000"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="whatsapp"
+    title="Chat on WhatsApp">
+
+    ☎
+
+</a>
+
+
+<!-- ================= CHAT ================= -->
+
+<div
+    class="chat-button"
+    id="chatButton"
+    title="Chat With Us">
+
+    💬
+
+</div>
+
+
+<div
+    class="chat-box"
+    id="chatBox">
+
+    <div class="chat-header">
+
+        <div>
+
+            <strong>
+                Chat With Us
+            </strong>
+
+            <small>
+                We usually reply quickly
+            </small>
+
+        </div>
+
+        <button
+            type="button"
+            id="closeChat">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="chat-body"
+        id="chatBody">
+
+        <div class="chat-welcome">
+
+            👋 Hello! How can we help you?
+
+        </div>
+
+    </div>
+
+
+    <div
+        class="visitor-form"
+        id="visitorForm">
+
+        <input
+            type="text"
+            id="visitorName"
+            placeholder="Your name"
+            maxlength="80"
+        >
+
+        <button
+            type="button"
+            id="startChat">
+
+            Start Chat
+
+        </button>
+
+    </div>
+
+
+    <div
+        class="chat-input-area"
+        id="chatInputArea">
+
+        <input
+            type="text"
+            id="chatMessage"
+            placeholder="Type your message..."
+            maxlength="2000"
+        >
+
+        <button
+            type="button"
+            id="sendChat">
+
+            ➤
+
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+    <div class="container footer-content">
+
+        <div>
+
+            <a
+                href="index.html"
+                class="logo footer-logo">
+
+                <span class="logo-icon">
+                    M
+                </span>
+
+                <span>
+                    Maher<span>Brothers</span>
+                </span>
+
+            </a>
+
+            <p>
+                Professional business solutions with quality and reliability.
+            </p>
+
+        </div>
+
+
+        <div class="footer-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="index.html#about">
+                About
+            </a>
+
+            <a href="index.html#services">
+                Services
+            </a>
+
+            <a href="posts.html">
+                Posts
+            </a>
+
+            <a href="index.html#contact">
+                Contact
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+
+        © <span id="year"></span>
+        Maher Brothers.
+        All Rights Reserved.
+
+    </div>
+
+</footer>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script src="script.js"></script>
+
+</body>
+</html>

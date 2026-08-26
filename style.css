@@ -1247,3 +1247,247 @@ footer {
         bottom: 18px;
     }
 }
+/* ================================
+   MY PICTURE - HERO SECTION
+================================ */
+
+.business- {
+    width: 100%;
+    height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.business- img {
+    width: 330px !important;
+    height: 330px !important;
+    display: block;
+    object-fit: cover;
+    border-radius: 50%;
+    margin: 0 !important;
+    border: 8px solid #ffffff;
+    box-shadow:
+        0 20px 50px rgba(37, 99, 235, 0.20),
+        0 0 0 8px rgba(37, 99, 235, 0.08);
+    transition: all 0.3s ease;
+}
+
+.business- img:hover {
+    transform: translateY(-6px) scale(1.65);
+    box-shadow:
+        0 28px 60px rgba(37, 99, 235, 0.25),
+        0 0 0 8px rgba(37, 99, 235, 0.10);
+}
+
+
+/* ================================
+   MOBILE PICTURE
+================================ */
+
+@media(max-width:900px) {
+
+    .business- {
+        height: 350px;
+        justify-content: center;
+    }
+
+    .business- img {
+        width: 280px !important;
+        height: 280px !important;
+    }
+}
+
+
+@media(max-width:600px) {
+
+    .business- {
+        height: 300px;
+    }
+
+    .business- img {
+        width: 240px !important;
+        height: 240px !important;
+    }
+}
+.business- {
+    width: 100%;
+    height: 420px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transform: translateX(75px);
+}
+/* ================================
+   POST MEDIA VIEWER
+================================ */
+
+.post-media img,
+.post-media video {
+    cursor: pointer;
+}
+
+.media-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.90);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    padding: 20px;
+}
+
+.media-popup.show {
+    display: flex;
+}
+
+.media-popup img,
+.media-popup video {
+    max-width: 95%;
+    max-height: 90%;
+    object-fit: contain;
+    border-radius: 10px;
+}
+
+.media-popup-close {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    width: 45px;
+    height: 45px;
+    border: none;
+    border-radius: 50%;
+    background: white;
+    color: #172033;
+    font-size: 28px;
+    cursor: pointer;
+}
+/* ================================
+   POST SEARCH
+================================ */
+
+.post-search {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto 35px;
+}
+
+.post-search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.post-search-icon {
+    position: absolute;
+    left: 17px;
+    font-size: 18px;
+    pointer-events: none;
+}
+
+#postSearch {
+    width: 100%;
+    height: 54px;
+    padding: 0 48px 0 48px;
+    border: 1px solid #dce1e9;
+    border-radius: 12px;
+    outline: none;
+    background: white;
+    color: #172033;
+    font-size: 15px;
+    box-shadow: 0 8px 25px rgba(15,23,42,.05);
+    transition: .3s;
+}
+
+#postSearch::placeholder {
+    color: #98a2b3;
+}
+
+#postSearch:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 4px rgba(37,99,235,.08);
+}
+
+.clear-search {
+    position: absolute;
+    right: 12px;
+    width: 32px;
+    height: 32px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 50%;
+    background: #eef2f7;
+    color: #667085;
+    font-size: 22px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.clear-search:hover {
+    background: #e2e8f0;
+    color: #172033;
+}
+
+.clear-search.show {
+    display: flex;
+}
+
+.search-result-count {
+    min-height: 20px;
+    margin-top: 10px;
+    text-align: center;
+    color: #7a8394;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+/* ================================
+   NO SEARCH RESULTS
+================================ */
+
+.no-search-results {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 45px 25px;
+    background: white;
+    border: 1px solid #e6eaf0;
+    border-radius: 15px;
+}
+
+.no-search-results h3 {
+    margin-bottom: 8px;
+    color: #172033;
+}
+
+.no-search-results p {
+    color: #697386;
+    font-size: 14px;
+}
+
+
+/* ================================
+   MOBILE SEARCH
+================================ */
+
+@media(max-width:600px) {
+
+    .post-search {
+        margin-bottom: 25px;
+    }
+
+    #postSearch {
+        height: 50px;
+        font-size: 14px;
+    }
+
+}

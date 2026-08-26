@@ -15,6 +15,7 @@ const SUPABASE_KEY =
 
 const $ = (id) => document.getElementById(id);
 
+
 function escapeHTML(value) {
 
     const div = document.createElement("div");
@@ -23,6 +24,7 @@ function escapeHTML(value) {
 
     return div.innerHTML;
 }
+
 
 function showStatus(message, type = "success") {
 
@@ -40,6 +42,7 @@ function showStatus(message, type = "success") {
         status.classList.remove("show");
 
     }, 5000);
+
 }
 
 
@@ -50,6 +53,7 @@ function showStatus(message, type = "success") {
 const menuBtn = $("menuBtn");
 const navMenu = $("navMenu");
 
+
 if (menuBtn && navMenu) {
 
     menuBtn.addEventListener("click", () => {
@@ -57,6 +61,7 @@ if (menuBtn && navMenu) {
         navMenu.classList.toggle("active");
 
     });
+
 
     navMenu.querySelectorAll("a").forEach(link => {
 
@@ -77,6 +82,7 @@ if (menuBtn && navMenu) {
 
 const yearElement = $("year");
 
+
 if (yearElement) {
 
     yearElement.textContent =
@@ -95,9 +101,11 @@ const pageSections =
 const navigationLinks =
     document.querySelectorAll("#navMenu a");
 
+
 const updateActiveNav = () => {
 
     let current = "home";
+
 
     pageSections.forEach(section => {
 
@@ -112,9 +120,11 @@ const updateActiveNav = () => {
 
     });
 
+
     navigationLinks.forEach(link => {
 
         link.classList.remove("active");
+
 
         if (
             link.getAttribute("href") ===
@@ -129,18 +139,22 @@ const updateActiveNav = () => {
 
 };
 
+
 window.addEventListener(
     "scroll",
     updateActiveNav
 );
 
+
 updateActiveNav();
+
 
 /* =====================================================
    CONTACT FORM — SUPABASE
 ===================================================== */
 
 const contactForm = $("contactForm");
+
 
 if (contactForm) {
 
@@ -149,6 +163,7 @@ if (contactForm) {
         async function(event) {
 
             event.preventDefault();
+
 
             const name =
                 $("name").value.trim();
@@ -175,6 +190,7 @@ if (contactForm) {
                 );
 
                 return;
+
             }
 
 
@@ -184,10 +200,14 @@ if (contactForm) {
                 );
 
 
-            submitButton.disabled = true;
+            if (submitButton) {
 
-            submitButton.textContent =
-                "Sending...";
+                submitButton.disabled = true;
+
+                submitButton.textContent =
+                    "Sending...";
+
+            }
 
 
             try {
@@ -206,6 +226,9 @@ if (contactForm) {
 
                                 "apikey":
                                     SUPABASE_KEY,
+
+                                "Authorization":
+                                    `Bearer ${SUPABASE_KEY}`,
 
                                 "Prefer":
                                     "return=minimal"
@@ -247,6 +270,7 @@ if (contactForm) {
                     throw new Error(
                         "Message could not be sent."
                     );
+
                 }
 
 
@@ -272,10 +296,14 @@ if (contactForm) {
             }
             finally {
 
-                submitButton.disabled = false;
+                if (submitButton) {
 
-                submitButton.textContent =
-                    "Send Message →";
+                    submitButton.disabled = false;
+
+                    submitButton.textContent =
+                        "Send Message →";
+
+                }
 
             }
 
@@ -283,15 +311,23 @@ if (contactForm) {
     );
 
 }
+
+
 /* =====================================================
    POST MEDIA SELECTION
 ===================================================== */
 
 let selectedPostMedia = null;
 
-const postImage = $("postImage");
-const postVideo = $("postVideo");
-const postFile = $("postFile");
+
+const postImage =
+    $("postImage");
+
+const postVideo =
+    $("postVideo");
+
+const postFile =
+    $("postFile");
 
 const selectedMedia =
     $("selectedMedia");
@@ -304,15 +340,34 @@ function clearMediaSelection() {
 
     selectedPostMedia = null;
 
-    if (postImage) postImage.value = "";
-    if (postVideo) postVideo.value = "";
-    if (postFile) postFile.value = "";
+
+    if (postImage) {
+
+        postImage.value = "";
+
+    }
+
+
+    if (postVideo) {
+
+        postVideo.value = "";
+
+    }
+
+
+    if (postFile) {
+
+        postFile.value = "";
+
+    }
+
 
     if (selectedMedia) {
 
         selectedMedia.innerHTML = "";
 
     }
+
 
     if (imagePreview) {
 
@@ -327,9 +382,13 @@ function showSelectedFile(file, type) {
 
     if (!file || !selectedMedia) return;
 
+
     selectedPostMedia = {
+
         file: file,
+
         type: type
+
     };
 
 
@@ -338,12 +397,21 @@ function showSelectedFile(file, type) {
         <div class="selected-file">
 
             <span>
-                ${type === "image" ? "🖼️" :
-                  type === "video" ? "🎥" : "📎"}
+
+                ${
+                    type === "image"
+                        ? "🖼️"
+                        : type === "video"
+                            ? "🎥"
+                            : "📎"
+                }
 
                 ${escapeHTML(file.name)}
+
                 (${formatFileSize(file.size)})
+
             </span>
+
 
             <button
                 type="button"
@@ -355,11 +423,13 @@ function showSelectedFile(file, type) {
             </button>
 
         </div>
+
     `;
 
 
     const removeButton =
         $("removeMedia");
+
 
     if (removeButton) {
 
@@ -379,6 +449,7 @@ function showSelectedFile(file, type) {
         const reader =
             new FileReader();
 
+
         reader.onload = function(event) {
 
             imagePreview.innerHTML = `
@@ -391,9 +462,11 @@ function showSelectedFile(file, type) {
 
         };
 
+
         reader.readAsDataURL(file);
 
-    } else if (imagePreview) {
+    }
+    else if (imagePreview) {
 
         imagePreview.innerHTML = "";
 
@@ -410,11 +483,13 @@ function formatFileSize(bytes) {
 
     }
 
+
     if (bytes < 1024 * 1024) {
 
         return `${(bytes / 1024).toFixed(1)} KB`;
 
     }
+
 
     return `${(bytes / (1024 * 1024)).toFixed(1)} MB`;
 
@@ -506,8 +581,11 @@ async function uploadPostMedia(file) {
     if (!file) {
 
         return {
+
             url: null,
+
             path: null
+
         };
 
     }
@@ -515,7 +593,10 @@ async function uploadPostMedia(file) {
 
     const safeName =
         file.name
-            .replace(/[^a-zA-Z0-9._-]/g, "_");
+            .replace(
+                /[^a-zA-Z0-9._-]/g,
+                "_"
+            );
 
 
     const filePath =
@@ -566,8 +647,11 @@ async function uploadPostMedia(file) {
 
 
     return {
+
         url: publicUrl,
+
         path: filePath
+
     };
 
 }
@@ -612,6 +696,9 @@ async function submitPost() {
     }
 
 
+    if (!submitPostBtn) return;
+
+
     submitPostBtn.disabled = true;
 
     submitPostBtn.textContent =
@@ -621,8 +708,11 @@ async function submitPost() {
     try {
 
         let mediaUrl = null;
+
         let mediaType = null;
+
         let mediaName = null;
+
         let mediaPath = null;
 
 
@@ -672,32 +762,37 @@ async function submitPost() {
 
                     },
 
-                    body: JSON.stringify({
+                    body:
+                        JSON.stringify({
 
-                        title: title,
+                            title:
+                                title,
 
-                        content: content,
+                            content:
+                                content,
 
-                        price: price || null,
+                            price:
+                                price || null,
 
-                        whatsapp: whatsapp || null,
+                            whatsapp:
+                                whatsapp || null,
 
-                        media_url:
-                            mediaUrl,
+                            media_url:
+                                mediaUrl,
 
-                        media_type:
-                            mediaType,
+                            media_type:
+                                mediaType,
 
-                        media_name:
-                            mediaName,
+                            media_name:
+                                mediaName,
 
-                        media_path:
-                            mediaPath,
+                            media_path:
+                                mediaPath,
 
-                        status:
-                            "pending"
+                            status:
+                                "pending"
 
-                    })
+                        })
 
                 }
             );
@@ -714,9 +809,13 @@ async function submitPost() {
 
 
         $("postTitle").value = "";
+
         $("postContent").value = "";
+
         $("postPrice").value = "";
+
         $("postWhatsapp").value = "";
+
 
         clearMediaSelection();
 
@@ -727,17 +826,21 @@ async function submitPost() {
         );
 
     }
-   catch(error) {
+    catch (error) {
 
-    console.error("POST SUBMISSION ERROR:", error);
+        console.error(
+            "POST SUBMISSION ERROR:",
+            error
+        );
 
-    showStatus(
-        "ERROR: " + error.message,
-        "error"
-    );
 
-}
- finally {
+        showStatus(
+            "ERROR: " + error.message,
+            "error"
+        );
+
+    }
+    finally {
 
         submitPostBtn.disabled = false;
 
@@ -760,118 +863,76 @@ if (submitPostBtn) {
 
 
 /* =====================================================
-   LOAD APPROVED POSTS
+   APPROVED POSTS DATA
 ===================================================== */
 
-async function loadApprovedPosts() {
+let allApprovedPosts = [];
+
+
+/* =====================================================
+   DISPLAY POSTS
+===================================================== */
+
+function displayPosts(posts) {
 
     const container =
         $("postsContainer");
 
+
     if (!container) return;
 
 
-    try {
-
-        const response =
-            await fetch(
-                `${SUPABASE_URL}/rest/v1/business_posts?status=eq.approved&order=created_at.desc`,
-                {
-
-                    headers: {
-
-                        "apikey":
-                            SUPABASE_KEY,
-
-                        "Authorization":
-                            `Bearer ${SUPABASE_KEY}`
-
-                    }
-
-                }
-            );
+    container.innerHTML = "";
 
 
-        if (!response.ok) {
-
-            throw new Error(
-                await response.text()
-            );
-
-        }
-
-
-        const posts =
-            await response.json();
-
-
-        container.innerHTML = "";
-
-
-        if (!posts.length) {
-
-            container.innerHTML = `
-
-                <div class="post-card">
-
-                    <h3>
-                        No posts published yet
-                    </h3>
-
-                    <p>
-                        Approved business updates and products
-                        will appear here.
-                    </p>
-
-                </div>
-
-            `;
-
-            return;
-
-        }
-
-
-        posts.forEach(
-            post => renderPost(
-                container,
-                post
-            )
-        );
-
-    }
-    catch(error) {
-
-        console.error(
-            "Load posts error:",
-            error
-        );
+    if (
+        !Array.isArray(posts) ||
+        posts.length === 0
+    ) {
 
         container.innerHTML = `
 
-            <div class="post-card">
+            <div class="no-search-results">
 
                 <h3>
-                    Posts are temporarily unavailable
+                    No matching posts found
                 </h3>
 
                 <p>
-                    Please try again later.
+                    Try searching with another
+                    product name, title or keyword.
                 </p>
 
             </div>
 
         `;
 
+        return;
+
     }
+
+
+    posts.forEach(post => {
+
+        renderPost(
+            container,
+            post
+        );
+
+    });
 
 }
 
+
+/* =====================================================
+   RENDER POST
+===================================================== */
 
 function renderPost(container, post) {
 
     const card =
         document.createElement("article");
+
 
     card.className =
         "post-card";
@@ -879,6 +940,8 @@ function renderPost(container, post) {
 
     let mediaHTML = "";
 
+
+    /* IMAGE */
 
     if (
         post.media_url &&
@@ -900,6 +963,8 @@ function renderPost(container, post) {
 
     }
 
+
+    /* VIDEO */
 
     if (
         post.media_url &&
@@ -926,6 +991,8 @@ function renderPost(container, post) {
     }
 
 
+    /* FILE */
+
     let fileHTML = "";
 
 
@@ -942,9 +1009,11 @@ function renderPost(container, post) {
                 target="_blank"
                 rel="noopener noreferrer">
 
-                📎 Open ${escapeHTML(
-                    post.media_name || "File"
-                )}
+                📎 Open ${
+                    escapeHTML(
+                        post.media_name || "File"
+                    )
+                }
 
             </a>
 
@@ -952,6 +1021,8 @@ function renderPost(container, post) {
 
     }
 
+
+    /* PRODUCT INFO */
 
     let productHTML = "";
 
@@ -999,7 +1070,8 @@ function renderPost(container, post) {
                 <span class="product-price">
 
                     ${escapeHTML(
-                        post.price || "Contact for price"
+                        post.price ||
+                        "Contact for price"
                     )}
 
                 </span>
@@ -1013,29 +1085,42 @@ function renderPost(container, post) {
     }
 
 
+    /* DATE */
+
     const date =
         post.created_at
             ? new Date(
                 post.created_at
-              ).toLocaleDateString()
+            ).toLocaleDateString()
             : "";
 
+
+    /* COMPLETE CARD */
 
     card.innerHTML = `
 
         ${mediaHTML}
 
         <div class="post-date">
+
             ${escapeHTML(date)}
+
         </div>
 
+
         <h3>
+
             ${escapeHTML(post.title)}
+
         </h3>
 
+
         <p>
+
             ${escapeHTML(post.content)}
+
         </p>
+
 
         ${fileHTML}
 
@@ -1048,6 +1133,267 @@ function renderPost(container, post) {
 
 }
 
+
+/* =====================================================
+   LOAD APPROVED POSTS
+===================================================== */
+
+async function loadApprovedPosts() {
+
+    const container =
+        $("postsContainer");
+
+
+    if (!container) return;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/business_posts?status=eq.approved&order=created_at.desc`,
+                {
+
+                    method: "GET",
+
+                    headers: {
+
+                        "apikey":
+                            SUPABASE_KEY,
+
+                        "Authorization":
+                            `Bearer ${SUPABASE_KEY}`
+
+                    }
+
+                }
+            );
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                await response.text()
+            );
+
+        }
+
+
+        const posts =
+            await response.json();
+
+
+        if (!Array.isArray(posts)) {
+
+            throw new Error(
+                "Invalid posts data."
+            );
+
+        }
+
+
+        allApprovedPosts =
+            posts;
+
+
+        displayPosts(
+            allApprovedPosts
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Load posts error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="post-card">
+
+                <h3>
+                    Posts are temporarily unavailable
+                </h3>
+
+                <p>
+                    Please try again later.
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   POST SEARCH
+===================================================== */
+
+const postSearch =
+    $("postSearch");
+
+const clearPostSearch =
+    $("clearPostSearch");
+
+const searchResultCount =
+    $("searchResultCount");
+
+
+function searchPosts() {
+
+    if (!postSearch) return;
+
+
+    const searchText =
+        postSearch.value
+            .trim()
+            .toLowerCase();
+
+
+    /* CLEAR BUTTON */
+
+    if (clearPostSearch) {
+
+        clearPostSearch.classList.toggle(
+            "show",
+            searchText.length > 0
+        );
+
+    }
+
+
+    /* EMPTY SEARCH */
+
+    if (!searchText) {
+
+        displayPosts(
+            allApprovedPosts
+        );
+
+
+        if (searchResultCount) {
+
+            searchResultCount.textContent =
+                "";
+
+        }
+
+
+        return;
+
+    }
+
+
+    /* FILTER ONLY MATCHING POSTS */
+
+    const filteredPosts =
+        allApprovedPosts.filter(post => {
+
+            const title =
+                String(
+                    post.title || ""
+                ).toLowerCase();
+
+
+            const content =
+                String(
+                    post.content || ""
+                ).toLowerCase();
+
+
+            const price =
+                String(
+                    post.price || ""
+                ).toLowerCase();
+
+
+            const whatsapp =
+                String(
+                    post.whatsapp || ""
+                ).toLowerCase();
+
+
+            return (
+                title.includes(searchText) ||
+                content.includes(searchText) ||
+                price.includes(searchText) ||
+                whatsapp.includes(searchText)
+            );
+
+        });
+
+
+    /* DISPLAY ONLY MATCHING */
+
+    displayPosts(
+        filteredPosts
+    );
+
+
+    /* RESULT COUNT */
+
+    if (searchResultCount) {
+
+        searchResultCount.textContent =
+            `${filteredPosts.length} ${
+                filteredPosts.length === 1
+                    ? "post"
+                    : "posts"
+            } found`;
+
+    }
+
+}
+
+
+/* =====================================================
+   SEARCH INPUT
+===================================================== */
+
+if (postSearch) {
+
+    postSearch.addEventListener(
+        "input",
+        searchPosts
+    );
+
+}
+
+
+/* =====================================================
+   CLEAR SEARCH
+===================================================== */
+
+if (clearPostSearch) {
+
+    clearPostSearch.addEventListener(
+        "click",
+        function() {
+
+            if (postSearch) {
+
+                postSearch.value = "";
+
+                searchPosts();
+
+                postSearch.focus();
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   INITIAL LOAD
+===================================================== */
 
 loadApprovedPosts();
 
@@ -1093,11 +1439,19 @@ let currentVisitorName =
     ) || "";
 
 
+/* =====================================================
+   OPEN CHAT
+===================================================== */
+
 function openBusinessChat() {
 
     if (!chatBox) return;
 
-    chatBox.classList.add("active");
+
+    chatBox.classList.add(
+        "active"
+    );
+
 
     document.body.classList.add(
         "chat-open"
@@ -1106,25 +1460,42 @@ function openBusinessChat() {
 
     if (currentVisitorName) {
 
-        visitorForm.style.display =
-            "none";
+        if (visitorForm) {
 
-        chatInputArea.style.display =
-            "flex";
+            visitorForm.style.display =
+                "none";
+
+        }
+
+
+        if (chatInputArea) {
+
+            chatInputArea.style.display =
+                "flex";
+
+        }
+
 
         loadVisitorMessages();
 
     }
+
 }
 
+
+/* =====================================================
+   CLOSE CHAT
+===================================================== */
 
 function closeBusinessChat() {
 
     if (!chatBox) return;
 
+
     chatBox.classList.remove(
         "active"
     );
+
 
     document.body.classList.remove(
         "chat-open"
@@ -1132,6 +1503,10 @@ function closeBusinessChat() {
 
 }
 
+
+/* =====================================================
+   CHAT EVENTS
+===================================================== */
 
 if (chatButton) {
 
@@ -1171,6 +1546,8 @@ if (visitorName) {
 
             if (event.key === "Enter") {
 
+                event.preventDefault();
+
                 startVisitorChat();
 
             }
@@ -1181,7 +1558,14 @@ if (visitorName) {
 }
 
 
+/* =====================================================
+   START VISITOR CHAT
+===================================================== */
+
 function startVisitorChat() {
+
+    if (!visitorName) return;
+
 
     const name =
         visitorName.value.trim();
@@ -1208,11 +1592,20 @@ function startVisitorChat() {
     );
 
 
-    visitorForm.style.display =
-        "none";
+    if (visitorForm) {
 
-    chatInputArea.style.display =
-        "flex";
+        visitorForm.style.display =
+            "none";
+
+    }
+
+
+    if (chatInputArea) {
+
+        chatInputArea.style.display =
+            "flex";
+
+    }
 
 
     addChatMessage(
@@ -1223,10 +1616,19 @@ function startVisitorChat() {
 
     loadVisitorMessages();
 
-    chatMessage.focus();
+
+    if (chatMessage) {
+
+        chatMessage.focus();
+
+    }
 
 }
 
+
+/* =====================================================
+   SEND CHAT EVENTS
+===================================================== */
 
 if (sendChat) {
 
@@ -1258,6 +1660,10 @@ if (chatMessage) {
 }
 
 
+/* =====================================================
+   ADD CHAT MESSAGE
+===================================================== */
+
 function addChatMessage(
     message,
     sender
@@ -1287,7 +1693,14 @@ function addChatMessage(
 }
 
 
+/* =====================================================
+   SEND CHAT MESSAGE
+===================================================== */
+
 async function sendChatMessage() {
+
+    if (!chatMessage) return;
+
 
     const message =
         chatMessage.value.trim();
@@ -1341,18 +1754,19 @@ async function sendChatMessage() {
 
                     },
 
-                    body: JSON.stringify({
+                    body:
+                        JSON.stringify({
 
-                        visitor_name:
-                            currentVisitorName,
+                            visitor_name:
+                                currentVisitorName,
 
-                        message:
-                            message,
+                            message:
+                                message,
 
-                        sender:
-                            "visitor"
+                            sender:
+                                "visitor"
 
-                    })
+                        })
 
                 }
             );
@@ -1363,10 +1777,12 @@ async function sendChatMessage() {
             const error =
                 await response.text();
 
+
             console.error(
                 "Chat error:",
                 error
             );
+
 
             alert(
                 "Message could not be sent."
@@ -1375,12 +1791,13 @@ async function sendChatMessage() {
         }
 
     }
-    catch(error) {
+    catch (error) {
 
         console.error(
             "Chat connection error:",
             error
         );
+
 
         alert(
             "Connection error. Please try again."
@@ -1390,6 +1807,10 @@ async function sendChatMessage() {
 
 }
 
+
+/* =====================================================
+   LOAD VISITOR MESSAGES
+===================================================== */
 
 async function loadVisitorMessages() {
 
@@ -1408,6 +1829,8 @@ async function loadVisitorMessages() {
             await fetch(
                 `${SUPABASE_URL}/rest/v1/chat_messages?visitor_name=eq.${encodedName}&order=created_at.asc`,
                 {
+
+                    method: "GET",
 
                     headers: {
 
@@ -1469,7 +1892,7 @@ async function loadVisitorMessages() {
         );
 
     }
-    catch(error) {
+    catch (error) {
 
         console.error(
             "Load chat error:",
@@ -1524,6 +1947,177 @@ document.addEventListener(
             closeBusinessChat();
 
         }
+
+    }
+);
+
+
+/* =====================================================
+   POST IMAGE / VIDEO VIEWER
+===================================================== */
+
+document.addEventListener(
+    "click",
+    function(event) {
+
+        const media =
+            event.target.closest(
+                ".post-media img, .post-media video"
+            );
+
+
+        if (!media) return;
+
+
+        const popup =
+            document.createElement("div");
+
+
+        popup.className =
+            "media-popup show";
+
+
+        const closeButton =
+            document.createElement("button");
+
+
+        closeButton.className =
+            "media-popup-close";
+
+
+        closeButton.textContent =
+            "×";
+
+
+        popup.appendChild(
+            closeButton
+        );
+
+
+        /* IMAGE */
+
+        if (
+            media.tagName === "IMG"
+        ) {
+
+            const image =
+                document.createElement("img");
+
+
+            image.src =
+                media.src;
+
+
+            image.alt =
+                media.alt ||
+                "Post Image";
+
+
+            popup.appendChild(
+                image
+            );
+
+        }
+
+
+        /* VIDEO */
+
+        else if (
+            media.tagName === "VIDEO"
+        ) {
+
+            const video =
+                document.createElement("video");
+
+
+            video.src =
+                media.currentSrc ||
+                media.src;
+
+
+            video.controls =
+                true;
+
+
+            video.autoplay =
+                true;
+
+
+            video.playsInline =
+                true;
+
+
+            popup.appendChild(
+                video
+            );
+
+        }
+
+
+        document.body.appendChild(
+            popup
+        );
+
+
+        document.body.style.overflow =
+            "hidden";
+
+
+        function closePopup() {
+
+            popup.remove();
+
+            document.body.style.overflow =
+                "";
+
+        }
+
+
+        closeButton.addEventListener(
+            "click",
+            closePopup
+        );
+
+
+        popup.addEventListener(
+            "click",
+            function(e) {
+
+                if (
+                    e.target === popup
+                ) {
+
+                    closePopup();
+
+                }
+
+            }
+        );
+
+
+        function escapeHandler(e) {
+
+            if (
+                e.key === "Escape"
+            ) {
+
+                closePopup();
+
+
+                document.removeEventListener(
+                    "keydown",
+                    escapeHandler
+                );
+
+            }
+
+        }
+
+
+        document.addEventListener(
+            "keydown",
+            escapeHandler
+        );
 
     }
 );
