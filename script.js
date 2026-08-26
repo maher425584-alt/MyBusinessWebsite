@@ -136,9 +136,8 @@ window.addEventListener(
 
 updateActiveNav();
 
-
 /* =====================================================
-   CONTACT FORM
+   CONTACT FORM — SUPABASE
 ===================================================== */
 
 const contactForm = $("contactForm");
@@ -147,7 +146,7 @@ if (contactForm) {
 
     contactForm.addEventListener(
         "submit",
-        function(event) {
+        async function(event) {
 
             event.preventDefault();
 
@@ -176,43 +175,114 @@ if (contactForm) {
                 );
 
                 return;
-
             }
 
 
-            const phone =
-                "923000000000";
+            const submitButton =
+                contactForm.querySelector(
+                    'button[type="submit"]'
+                );
 
 
-            const whatsappMessage =
-`Hello Maher Brothers,
+            submitButton.disabled = true;
 
-Name: ${name}
-Email: ${email}
-Subject: ${subject}
-
-Message:
-${message}`;
+            submitButton.textContent =
+                "Sending...";
 
 
-            const url =
-                `https://wa.me/${phone}?text=${encodeURIComponent(
-                    whatsappMessage
-                )}`;
+            try {
+
+                const response =
+                    await fetch(
+                        `${SUPABASE_URL}/rest/v1/contact_messages`,
+                        {
+
+                            method: "POST",
+
+                            headers: {
+
+                                "Content-Type":
+                                    "application/json",
+
+                                "apikey":
+                                    SUPABASE_KEY,
+
+                                "Prefer":
+                                    "return=minimal"
+
+                            },
+
+                            body:
+                                JSON.stringify({
+
+                                    name:
+                                        name,
+
+                                    email:
+                                        email,
+
+                                    subject:
+                                        subject,
+
+                                    message:
+                                        message
+
+                                })
+
+                        }
+                    );
 
 
-            window.open(
-                url,
-                "_blank",
-                "noopener,noreferrer"
-            );
+                const responseText =
+                    await response.text();
+
+
+                if (!response.ok) {
+
+                    console.error(
+                        "Supabase contact error:",
+                        responseText
+                    );
+
+                    throw new Error(
+                        "Message could not be sent."
+                    );
+                }
+
+
+                alert(
+                    "✅ Message sent successfully! We will contact you soon."
+                );
+
+
+                contactForm.reset();
+
+            }
+            catch (error) {
+
+                console.error(
+                    "Contact form error:",
+                    error
+                );
+
+                alert(
+                    "❌ Message could not be sent. Please try again."
+                );
+
+            }
+            finally {
+
+                submitButton.disabled = false;
+
+                submitButton.textContent =
+                    "Send Message →";
+
+            }
 
         }
     );
 
 }
-
-
 /* =====================================================
    POST MEDIA SELECTION
 ===================================================== */

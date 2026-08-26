@@ -1709,3 +1709,835 @@ setInterval(
     showAdminScreen();
 
 })();
+/* =====================================================
+   CONTACT MESSAGES
+===================================================== */
+
+const messagesList =
+    $("messagesList");
+
+const messagesStatus =
+    $("messagesStatus");
+
+const refreshMessagesButton =
+    $("refreshMessagesButton");
+
+
+function showMessagesStatus(
+    message,
+    type = "success"
+) {
+
+    if (!messagesStatus) return;
+
+    messagesStatus.textContent =
+        message;
+
+    messagesStatus.className =
+        `admin-status show ${type}`;
+
+    setTimeout(() => {
+
+        messagesStatus.classList.remove(
+            "show"
+        );
+
+    }, 5000);
+
+}
+
+
+/* =====================================================
+   LOAD CONTACT MESSAGES
+===================================================== */
+
+async function loadContactMessages() {
+
+    if (!messagesList) return;
+
+
+    messagesList.innerHTML = `
+
+        <div class="loading">
+
+            📩 Loading messages...
+
+        </div>
+
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/contact_messages?select=id,name,email,subject,message,status,created_at&order=created_at.desc`,
+                {
+
+                    method:
+                        "GET",
+
+                    headers:
+                        authHeaders()
+
+                }
+            );
+
+
+        const responseText =
+            await response.text();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                responseText
+            );
+
+        }
+
+
+        const messages =
+            JSON.parse(
+                responseText
+            );
+
+
+        renderContactMessages(
+            messages
+        );
+
+
+    }
+    catch(error) {
+
+        console.error(
+            "CONTACT MESSAGES ERROR:",
+            error
+        );
+
+
+        messagesList.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    Could not load messages
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER CONTACT MESSAGES
+===================================================== */
+
+function renderContactMessages(
+    messages
+) {
+
+    if (!messagesList) return;
+
+
+    if (
+        !Array.isArray(messages) ||
+        messages.length === 0
+    ) {
+
+        messagesList.innerHTML = `
+
+            <div class="empty">
+
+                <div style="font-size:40px;">
+                    📭
+                </div>
+
+                <h3>
+                    No Contact Messages
+                </h3>
+
+                <p>
+                    New messages from your website
+                    will appear here.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    messagesList.innerHTML = "";
+
+
+    messages.forEach(
+        message => {
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                `contact-message-card ${
+                    message.status === "unread"
+                        ? "unread"
+                        : ""
+                }`;
+
+
+            const date =
+                message.created_at
+                    ? new Date(
+                        message.created_at
+                    ).toLocaleString()
+                    : "Unknown";
+
+
+            card.innerHTML = `
+
+                <div class="contact-message-top">
+
+                    <div>
+
+                        <div class="contact-message-name">
+
+                            👤
+                            ${escapeHTML(
+                                message.name
+                            )}
+
+                        </div>
+
+                        <a
+                            class="contact-message-email"
+                            href="mailto:${escapeHTML(
+                                message.email
+                            )}"
+                        >
+
+                            ✉
+                            ${escapeHTML(
+                                message.email
+                            )}
+
+                        </a>
+
+                    </div>
+
+
+                    <span
+                        class="message-status ${
+                            message.status === "unread"
+                                ? "unread"
+                                : "read"
+                        }"
+                    >
+
+                        ${
+                            message.status === "unread"
+                                ? "NEW"
+                                : "READ"
+                        }
+
+                    </span>
+
+                </div>
+
+
+                <div class="contact-message-subject">
+
+                    ${escapeHTML(
+                        message.subject
+                    )}
+
+                </div>
+
+
+                <div class="contact-message-body">
+
+                    ${escapeHTML(
+                        message.message
+                    )}
+
+                </div>
+
+
+                <div class="contact-message-footer">
+
+                    <span>
+
+                        🕒
+                        ${escapeHTML(
+                            date
+                        )}
+
+                    </span>
+
+
+                    <div class="message-actions">
+
+                        ${
+                            message.status === "unread"
+                            ? `
+                                <button
+                                    class="message-action read-message-btn"
+                                    data-message-action="read"
+                                    data-id="${escapeHTML(
+                                        message.id
+                                    )}"
+                                >
+                                    ✓ Mark Read
+                                </button>
+                            `
+                            : ""
+                        }
+
+
+                        <a
+                            class="message-action reply-message-btn"
+                            href="mailto:${escapeHTML(
+                                message.email
+                            )}?subject=${encodeURIComponent(
+                                "Re: " +
+                                (message.subject || "Your Message")
+                            )}"
+                        >
+                            ↩ Reply
+                        </a>
+
+
+                        <button
+                            class="message-action delete-message-btn"
+                            data-message-action="delete"
+                            data-id="${escapeHTML(
+                                message.id
+                            )}"
+                        >
+                            🗑 Delete
+                        </button>
+
+                    </div>
+
+                </div>
+
+            `;
+
+
+            messagesList.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    messagesList
+        .querySelectorAll(
+            "[data-message-action]"
+        )
+        .forEach(
+            button => {
+
+                button.addEventListener(
+                    "click",
+                    () => {
+
+                        handleContactMessageAction(
+                            button.dataset.messageAction,
+                            button.dataset.id
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+/* =====================================================
+   MESSAGE ACTIONS
+===================================================== */
+
+async function handleContactMessageAction(
+    action,
+    messageId
+) {
+
+    if (!messageId) return;
+
+
+    if (
+        action === "delete"
+    ) {
+
+        const confirmed =
+            confirm(
+                "Are you sure you want to permanently delete this message?"
+            );
+
+
+        if (!confirmed) {
+            return;
+        }
+
+
+        try {
+
+            const response =
+                await fetch(
+                    `${SUPABASE_URL}/rest/v1/contact_messages?id=eq.${encodeURIComponent(
+                        messageId
+                    )}`,
+                    {
+
+                        method:
+                            "DELETE",
+
+                        headers:
+                            authHeaders()
+
+                    }
+                );
+
+
+            const text =
+                await response.text();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    text
+                );
+
+            }
+
+
+            showMessagesStatus(
+                "Message deleted successfully.",
+                "success"
+            );
+
+
+            await loadContactMessages();
+
+        }
+        catch(error) {
+
+            console.error(
+                "DELETE MESSAGE ERROR:",
+                error
+            );
+
+
+            showMessagesStatus(
+                "Could not delete message.",
+                "error"
+            );
+
+        }
+
+
+        return;
+
+    }
+
+
+    if (
+        action === "read"
+    ) {
+
+        try {
+
+            const response =
+                await fetch(
+                    `${SUPABASE_URL}/rest/v1/contact_messages?id=eq.${encodeURIComponent(
+                        messageId
+                    )}`,
+                    {
+
+                        method:
+                            "PATCH",
+
+                        headers: {
+
+                            ...authHeaders(),
+
+                            "Prefer":
+                                "return=minimal"
+
+                        },
+
+                        body:
+                            JSON.stringify({
+
+                                status:
+                                    "read"
+
+                            })
+
+                    }
+                );
+
+
+            const text =
+                await response.text();
+
+
+            if (!response.ok) {
+
+                throw new Error(
+                    text
+                );
+
+            }
+
+
+            showMessagesStatus(
+                "Message marked as read.",
+                "success"
+            );
+
+
+            await loadContactMessages();
+
+        }
+        catch(error) {
+
+            console.error(
+                "READ MESSAGE ERROR:",
+                error
+            );
+
+
+            showMessagesStatus(
+                "Could not update message.",
+                "error"
+            );
+
+        }
+
+    }
+
+}
+
+
+/* =====================================================
+   MESSAGE REFRESH
+===================================================== */
+
+if (
+    refreshMessagesButton
+) {
+
+    refreshMessagesButton.addEventListener(
+        "click",
+        loadContactMessages
+    );
+
+}
+
+
+/* =====================================================
+   START CONTACT MESSAGES
+===================================================== */
+
+if (
+    getAccessToken()
+) {
+
+    setTimeout(
+        loadContactMessages,
+        500
+    );
+
+}
+/* =====================================================
+   CONTACT MESSAGES
+===================================================== */
+
+async function loadContactMessages() {
+
+    const container =
+        $("messagesList");
+
+    if (!container) return;
+
+
+    container.innerHTML = `
+        <div class="loading">
+            Loading messages...
+        </div>
+    `;
+
+
+    try {
+
+        const response =
+            await fetch(
+                `${SUPABASE_URL}/rest/v1/contact_messages?order=created_at.desc`,
+                {
+                    method: "GET",
+                    headers: authHeaders()
+                }
+            );
+
+
+        const responseText =
+            await response.text();
+
+
+        if (!response.ok) {
+
+            throw new Error(
+                responseText
+            );
+
+        }
+
+
+        const messages =
+            JSON.parse(
+                responseText
+            );
+
+
+        renderContactMessages(
+            messages
+        );
+
+    }
+    catch (error) {
+
+        console.error(
+            "Load contact messages error:",
+            error
+        );
+
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    Could not load messages
+                </h3>
+
+                <p>
+                    ${escapeHTML(
+                        error.message
+                    )}
+                </p>
+
+            </div>
+
+        `;
+
+    }
+
+}
+
+
+/* =====================================================
+   RENDER CONTACT MESSAGES
+===================================================== */
+
+function renderContactMessages(
+    messages
+) {
+
+    const container =
+        $("messagesList");
+
+
+    if (!container) return;
+
+
+    if (!messages.length) {
+
+        container.innerHTML = `
+
+            <div class="empty">
+
+                <h3>
+                    No messages yet
+                </h3>
+
+                <p>
+                    Messages submitted through your website
+                    contact form will appear here.
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    container.innerHTML = "";
+
+
+    messages.forEach(
+        message => {
+
+            const card =
+                document.createElement(
+                    "article"
+                );
+
+
+            card.className =
+                "post-admin-card";
+
+
+            const date =
+                message.created_at
+                    ? new Date(
+                        message.created_at
+                      ).toLocaleString()
+                    : "";
+
+
+            card.innerHTML = `
+
+                <div class="post-admin-top">
+
+                    <div>
+
+                        <h3>
+                            ${escapeHTML(
+                                message.subject
+                            )}
+                        </h3>
+
+                        <p class="post-description">
+                            ${escapeHTML(
+                                message.message
+                            )}
+                        </p>
+
+                    </div>
+
+                    <span class="badge approved">
+                        NEW
+                    </span>
+
+                </div>
+
+
+                <div class="post-details">
+
+                    <div class="detail-box">
+
+                        <strong>
+                            Name
+                        </strong>
+
+                        ${escapeHTML(
+                            message.name
+                        )}
+
+                    </div>
+
+
+                    <div class="detail-box">
+
+                        <strong>
+                            Email
+                        </strong>
+
+                        ${escapeHTML(
+                            message.email
+                        )}
+
+                    </div>
+
+                </div>
+
+
+                <div class="post-date">
+
+                    Received:
+                    ${escapeHTML(
+                        date
+                    )}
+
+                </div>
+
+            `;
+
+
+            container.appendChild(
+                card
+            );
+
+        }
+    );
+
+}
+
+
+/* =====================================================
+   REFRESH CONTACT MESSAGES
+===================================================== */
+
+const refreshMessagesButton =
+    $("refreshMessagesButton");
+
+
+if (refreshMessagesButton) {
+
+    refreshMessagesButton.addEventListener(
+        "click",
+        loadContactMessages
+    );
+
+}
+
+
+/* =====================================================
+   LOAD MESSAGES WITH ADMIN DASHBOARD
+===================================================== */
+
+const originalShowAdminScreen =
+    showAdminScreen;
+
+
+showAdminScreen =
+    function() {
+
+        $("loginScreen")
+            .classList.add("hidden");
+
+
+        $("adminScreen")
+            .classList.remove("hidden");
+
+
+        loadPosts();
+
+        loadContactMessages();
+
+    };
